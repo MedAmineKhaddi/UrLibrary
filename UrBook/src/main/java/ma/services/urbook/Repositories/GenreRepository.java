@@ -1,9 +1,10 @@
 package ma.services.urbook.Repositories;
 
-import ma.services.urbook.Models.Genra;
-import org.hibernate.sql.ast.tree.expression.JdbcParameter;
+import ma.services.urbook.Models.Genre;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.support.Repositories;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-public interface GenreRepository extends JpaRepository<Genra,Long> {
+@RepositoryRestResource
+public interface GenreRepository extends JpaRepository<Genre,Long> {
+
 }
