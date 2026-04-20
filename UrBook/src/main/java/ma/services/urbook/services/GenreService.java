@@ -5,5 +5,5 @@ import ma.services.urbook.Payload.DTO.GenreDTO;
 
 
 public interface GenreService {
-    Genre createGenre(Genre Genre);
+    GenreDTO createGenre(GenreDTO Genre);
 }
