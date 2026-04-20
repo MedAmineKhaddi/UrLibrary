@@ -1,22 +1,26 @@
 package ma.services.urbook.services.impl;
 
-import ma.services.urbook.Models.Genra;
+import lombok.RequiredArgsConstructor;
+import ma.services.urbook.Mappers.GenreMapper;
+import ma.services.urbook.Payload.DTO.GenreDTO;
+import ma.services.urbook.Models.Genre;
 import ma.services.urbook.Repositories.GenreRepository;
-import ma.services.urbook.services.GenereService;
-import org.springframework.beans.factory.annotation.Autowired;
+import ma.services.urbook.services.GenreService;
 import org.springframework.stereotype.Service;
 
-
-public class GenereServiceImpl implements GenereService {
+@Service
+@RequiredArgsConstructor
+public class GenreServiceImpl implements GenreService {
 
    final private GenreRepository genreRepository;
 
-    public GenereServiceImpl(GenreRepository genreRepository){
-        this.genreRepository = genreRepository;
+    @Override
+    public Genre createGenre(Genre genre) {
+       return genreRepository.save(genre);
     }
 
-    @Override
-    public Genra createGenre(Genra Genra) {
-        return this.genreRepository.save(Genra);
-    }
+
+
+
+
 }
