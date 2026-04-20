@@ -11,7 +11,7 @@ import java.util.*;
 @Entity @AllArgsConstructor @NoArgsConstructor @Data @Builder
 public class Genre {
 
-    @Id @GeneratedValue(strategy= GenerationType.AUTO)
+    @Id @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank(message = "Genre Code is Mandatory")

@@ -8,15 +8,21 @@ import ma.services.urbook.Repositories.GenreRepository;
 import ma.services.urbook.services.GenreService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class GenreServiceImpl implements GenreService {
 
    final private GenreRepository genreRepository;
 
+
     @Override
     public GenreDTO createGenre(GenreDTO genreDTO) {
        Genre genre = Genre.builder()
+               .id(genreDTO.getId())
                .name(genreDTO.getName())
                .code(genreDTO.getCode())
                .description(genreDTO.getDescription())
@@ -30,24 +36,13 @@ public class GenreServiceImpl implements GenreService {
        }
         Genre savedGenre = genreRepository.save(genre);
 
-       GenreDTO dto = GenreDTO.builder()
-               .id(savedGenre.getId())
-               .code(savedGenre.getCode())
-               .name(savedGenre.getName())
-               .description(savedGenre.getDescription())
-               .displayOrder(savedGenre.getDisplayOrder())
-               .active(savedGenre.getActive())
-               .createdAt(genre.getCreatedAt())
-               .updatedAt(genre.getUpdatedAt())
-               .build();
-
-       if(savedGenre.getParentGenre()!=null)
-       {
-           dto.setParentGenreId(savedGenre.getParentGenre().getId());
-           dto.setParentGenreName(savedGenre.getParentGenre().getName());
-       }
-
+       GenreDTO dto = GenreMapper.toDTO(savedGenre);
         return dto;
+    }
+
+    @Override
+    public List<GenreDTO> getAllGenres() {
+        return genreRepository.findAll().stream().map(GenreMapper::toDTO).collect(Collectors.toList());
     }
 
 
