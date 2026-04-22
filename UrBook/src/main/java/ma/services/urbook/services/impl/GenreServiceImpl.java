@@ -17,36 +17,18 @@ import java.util.stream.Collectors;
 public class GenreServiceImpl implements GenreService {
 
    final private GenreRepository genreRepository;
+   final private GenreMapper genreMapper;
 
 
     @Override
     public GenreDTO createGenre(GenreDTO genreDTO) {
-       Genre genre = Genre.builder()
-               .id(genreDTO.getId())
-               .name(genreDTO.getName())
-               .code(genreDTO.getCode())
-               .description(genreDTO.getDescription())
-               .displayOrder(genreDTO.getDisplayOrder())
-               .active(true)
-               .build();
-       if(genreDTO.getParentGenreId()!=null)
-       {
-           Genre parentGenre = genreRepository.findById(genreDTO.getParentGenreId()).get();
-           genre.setParentGenre(parentGenre);
-       }
-        Genre savedGenre = genreRepository.save(genre);
-
-       GenreDTO dto = GenreMapper.toDTO(savedGenre);
-        return dto;
+       Genre genre = genreMapper.toEntity(genreDTO);
+       Genre savedGenre = genreRepository.save(genre);
+        return genreMapper.toDTO(savedGenre);
     }
 
     @Override
     public List<GenreDTO> getAllGenres() {
-        return genreRepository.findAll().stream().map(GenreMapper::toDTO).collect(Collectors.toList());
+        return genreRepository.findAll().stream().map(genreMapper::toDTO).collect(Collectors.toList());
     }
-
-
-
-
-
 }
