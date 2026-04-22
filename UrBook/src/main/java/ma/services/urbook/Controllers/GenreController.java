@@ -1,6 +1,7 @@
 package ma.services.urbook.Controllers;
 
 import lombok.RequiredArgsConstructor;
+import ma.services.urbook.Exceptions.GenreException;
 import ma.services.urbook.Models.Genre;
 import ma.services.urbook.Payload.DTO.GenreDTO;
 import ma.services.urbook.services.GenreService;
@@ -28,4 +29,8 @@ public class GenreController {
         return ResponseEntity.ok(genreService.getAllGenres());
     }
 
+    @GetMapping("genre/{id}")
+    public ResponseEntity<?> getGenreById(@PathVariable Long id) throws GenreException {
+        return ResponseEntity.ok(genreService.getGenreById(id));
+    }
 }
