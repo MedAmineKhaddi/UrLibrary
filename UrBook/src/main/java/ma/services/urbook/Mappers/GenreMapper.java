@@ -62,8 +62,7 @@ public class GenreMapper {
                 .build();
 
         if(genreDTO.getParentGenreId() != null) {
-            Genre parentGenre = genreRepository.findById(genreDTO.getParentGenreId()).get();
-            genre.setParentGenre(parentGenre);
+            genreRepository.findById(genreDTO.getParentGenreId()).ifPresent(genre::setParentGenre);
         }
 
         return genre;
