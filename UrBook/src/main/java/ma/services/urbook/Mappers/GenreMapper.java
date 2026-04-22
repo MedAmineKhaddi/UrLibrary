@@ -1,13 +1,22 @@
 package ma.services.urbook.Mappers;
 
+import lombok.RequiredArgsConstructor;
 import ma.services.urbook.Models.Genre;
 import ma.services.urbook.Payload.DTO.GenreDTO;
+import ma.services.urbook.Repositories.GenreRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
+@Component
 public class GenreMapper {
 
-    public static GenreDTO toDTO (Genre genre) {
+    @Autowired
+    public GenreRepository genreRepository;
+
+    public GenreDTO toDTO (Genre genre) {
         if (genre == null) {
             return null;
         }
@@ -38,6 +47,27 @@ public class GenreMapper {
 
 
         return genreDTO;
+    }
+
+    public  Genre toEntity(GenreDTO genreDTO) {
+        if (genreDTO == null) {
+            return null;
+        }
+        Genre genre =  Genre.builder()
+                .code(genreDTO.getCode())
+                .name(genreDTO.getName())
+                .description(genreDTO.getDescription())
+                .active(true)
+                .displayOrder(genreDTO.getDisplayOrder())
+                .build();
+
+        if(genreDTO.getParentGenreId() != null) {
+            Genre parentGenre = genreRepository.findById(genreDTO.getParentGenreId()).get();
+            genre.setParentGenre(parentGenre);
+        }
+
+        return genre;
+
     }
 
 
