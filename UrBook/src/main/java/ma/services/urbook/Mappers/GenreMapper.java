@@ -1,6 +1,7 @@
 package ma.services.urbook.Mappers;
 
 import lombok.RequiredArgsConstructor;
+import ma.services.urbook.Exceptions.GenreException;
 import ma.services.urbook.Models.Genre;
 import ma.services.urbook.Payload.DTO.GenreDTO;
 import ma.services.urbook.Repositories.GenreRepository;
@@ -64,9 +65,31 @@ public class GenreMapper {
         if(genreDTO.getParentGenreId() != null) {
             genreRepository.findById(genreDTO.getParentGenreId()).ifPresent(genre::setParentGenre);
         }
+        genreRepository.save(genre);
 
         return genre;
 
+    }
+
+    public void updateEntityFromDTO(GenreDTO genreDTO, Genre existingGenre)  {
+        if (genreDTO == null && existingGenre == null) {
+            return;
+        }
+        existingGenre.setName(genreDTO.getName());
+        existingGenre.setDescription(genreDTO.getDescription());
+        existingGenre.setUpdatedAt(genreDTO.getUpdatedAt());
+        existingGenre.setDisplayOrder(genreDTO.getDisplayOrder() != null ? genreDTO.getDisplayOrder() : 0 );
+        if (genreDTO.getActive()!=null)
+        {
+            existingGenre.setActive(genreDTO.getActive());
+        }
+        if(genreDTO.getParentGenreId()!=null)
+        {
+            genreRepository.findById(genreDTO.getParentGenreId()).ifPresent(existingGenre::setParentGenre);
+        }
+        existingGenre.setCreatedAt(genreDTO.getCreatedAt());
+        existingGenre.setCode(genreDTO.getCode());
+        genreRepository.save(existingGenre);
     }
 
 
