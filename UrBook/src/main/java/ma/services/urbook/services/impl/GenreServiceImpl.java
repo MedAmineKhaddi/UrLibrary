@@ -18,7 +18,6 @@ public class GenreServiceImpl implements GenreService {
    final private GenreRepository genreRepository;
    final private GenreMapper genreMapper;
 
-
     @Override
     public GenreDTO createGenre(GenreDTO genreDTO) {
        Genre genre = genreMapper.toEntity(genreDTO);
@@ -31,7 +30,6 @@ public class GenreServiceImpl implements GenreService {
         return genreRepository.findAll().stream().map(genreMapper::toDTO).collect(Collectors.toList());
     }
 
-    //add it
     @Override
     public GenreDTO getGenreById(Long id) throws GenreException {
         Genre genre = genreRepository.findById(id).orElseThrow(() -> new GenreException("Genre not found"));
@@ -39,19 +37,24 @@ public class GenreServiceImpl implements GenreService {
         return dto;
     }
 
-
     @Override
-    public void hardDeleteGenre(Long genreId) {
-
+    public GenreDTO updateGenre(Long genreId, GenreDTO GenreDTO) throws  GenreException {
+            Genre existingGenre =  genreRepository.findById(genreId).orElseThrow(() -> new GenreException("Genre not found"));
+            genreMapper.updateEntityFromDTO(GenreDTO,existingGenre);
+            Genre updatedGenre = genreRepository.save(existingGenre);
+            return genreMapper.toDTO(updatedGenre);
     }
 
     @Override
-    public void deleteGenre(Long genreId) {
-
+    public void deleteGenre(Long genreId) throws GenreException {
+        Genre existingGenre = genreRepository.findById(genreId).orElseThrow(() -> new GenreException("Genre not found"));
+        existingGenre.setActive(false);
+        genreRepository.delete(existingGenre);
     }
 
     @Override
-    public GenreDTO updateGenre(Long genreId, GenreDTO GenreDTO) {
-        return null;
+    public void hardDeleteGenre(Long genreId) throws GenreException{
+        Genre existingGenre = genreRepository.findById(genreId).orElseThrow(() -> new GenreException("Genre not found"));
+        genreRepository.delete(existingGenre);
     }
 }
