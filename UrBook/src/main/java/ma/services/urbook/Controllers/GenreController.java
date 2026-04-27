@@ -66,8 +66,8 @@ public class GenreController {
         return ResponseEntity.ok(genreService.getTotalActiveGenres());
     }
 
-    @GetMapping("/{id}/book-count")
-    public ResponseEntity<?> getBookCountByGenres(Long genreId) {
+    @GetMapping("/{genreId}/book-count")
+    public ResponseEntity<?> getBookCountByGenre(@PathVariable Long genreId) {
         return ResponseEntity.ok(genreService.getBookCountByGenres(genreId));
     }
 
