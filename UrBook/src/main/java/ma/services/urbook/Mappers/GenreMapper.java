@@ -7,7 +7,7 @@ import ma.services.urbook.Payload.DTO.GenreDTO;
 import ma.services.urbook.Repositories.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -91,6 +91,11 @@ public class GenreMapper {
         existingGenre.setCode(genreDTO.getCode());
         genreRepository.save(existingGenre);
     }
+
+public List<GenreDTO> toDTOList (List<Genre> genreList)
+{
+    return  genreList.stream().map(this::toDTO).collect(Collectors.toList());
+}
 
 
 
