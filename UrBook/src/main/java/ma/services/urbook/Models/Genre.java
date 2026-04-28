@@ -1,6 +1,7 @@
 package ma.services.urbook.Models;
 
 import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import org.hibernate.annotations.*;
@@ -32,7 +33,7 @@ public class Genre {
     @ManyToOne
     private Genre parentGenre;
 
-    @OneToMany
+    @OneToMany(mappedBy = "parentGenre", cascade = CascadeType.REMOVE)
     private List<Genre> subGenre=new ArrayList<Genre>();
 
     @CreationTimestamp

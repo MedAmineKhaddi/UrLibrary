@@ -61,7 +61,7 @@ public class GenreServiceImpl implements GenreService {
 
 
     @Override
-    public List<GenreDTO> getTopLevelGenres() {
+    public List<GenreDTO> getTopLevelGenres()  {
         List<Genre> topLevelGenres = genreRepository
                 .findByParentGenreIsNullAndActiveTrueOrderByDisplayOrderAsc();
         return genreMapper.toDTOList(topLevelGenres);
