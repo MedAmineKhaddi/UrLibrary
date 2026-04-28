@@ -40,7 +40,7 @@ public class GenreController {
         return ResponseEntity.ok(genreService.updateGenre(genreId,genreDTO));
     }
 
-    @DeleteMapping("genre/{id}")
+    @DeleteMapping("genre/soft/{id}")
     public ResponseEntity<?> deleteGenre(@PathVariable Long id) throws GenreException {
         genreService.deleteGenre(id);
         ApiResponse response = new ApiResponse("genre deleted seccessfuly, soft delete",true);
