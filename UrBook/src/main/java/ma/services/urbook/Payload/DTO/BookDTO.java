@@ -66,8 +66,4 @@ public class BookDTO {
 
     private Boolean alreadyHaveReservation;
 
-
-
-
-
 }
