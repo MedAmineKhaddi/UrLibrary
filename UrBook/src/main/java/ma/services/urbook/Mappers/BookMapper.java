@@ -38,9 +38,9 @@ public class BookMapper {
                 .coverImageUrl(book.getCoverImageUrl())
                 .totalCopies(book.getTotalCopies())
                 .publishedDate(book.getPublishedDate())
-                .genreCode(book.getGenre().getCode())
-                .genreName(book.getGenre().getName())
-                .genreId(book.getGenre().getId())
+//                .genreCode(book.getGenre().getCode())
+//                .genreName(book.getGenre().getName())
+//                .genreId(book.getGenre().getId())
                 .build();
     }
 
