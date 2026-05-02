@@ -11,17 +11,14 @@ public interface BookService {
 
     BookDTO createBook(BookDTO bookDTO) throws BookException;
     List<BookDTO> createBooksBulk(List<BookDTO> bookDTOs) throws BookException;
-    BookDTO updateBook(BookDTO bookDTO);
-    BookDTO deleteBook(BookDTO bookDTO);
-    BookDTO getBookById(Long bookId);
+    BookDTO updateBook(BookDTO bookDTO, Long bookId) throws BookException;
+    void deleteBook(Long bookID) throws BookException;
+    BookDTO getBookById(Long bookId) throws BookException;
     List<BookDTO> getBooks() throws BookException;
     List<BookDTO> getBooksByAuthor(String author);
-    BookDTO getBooksByISBN(String ISBN);
-    void deleteBookById(Long bookId);
-    void handleDeleteBooks(Long bookId);
-//    PageResponse<BookDTO> searchBooksWithFilters(
-//            BookSearchRequest searchRequest
-//    );
-
-
+    BookDTO getBooksByISBN(String ISBN) throws BookException;
+    void handleDeleteBooks(Long bookId) throws BookException;
+    PageResponse<BookDTO> searchBooksWithFilters(BookSearchRequest searchRequest);
+    long getTotalActiveBooks();
+    long getTotalAvailableBooks();
 }
