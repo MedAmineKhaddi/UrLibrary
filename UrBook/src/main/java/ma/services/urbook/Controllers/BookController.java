@@ -6,8 +6,6 @@ import ma.services.urbook.Exceptions.BookException;
 import ma.services.urbook.Payload.DTO.BookDTO;
 import ma.services.urbook.Payload.Response.ApiResponse;
 import ma.services.urbook.services.BookService;
-import org.aspectj.apache.bcel.Repository;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +30,6 @@ public class BookController {
         return ResponseEntity.ok(createdBooks);
     }
 
-
     @DeleteMapping("/delete-book/{bookID}")
     public ResponseEntity<?> deleteBook(@PathVariable  long bookID) throws BookException
     {
@@ -49,13 +46,16 @@ public class BookController {
     }
 
     @PutMapping("/{bookId}")
-    public ResponseEntity<?> updateBook(@PathVariable Long bookId, @Valid @RequestBody BookDTO bookDTO) {
-            try{
-                        BookDTO updatedBook = bookService.updateBook(bookDTO, bookId);
-                        return ResponseEntity.ok(updatedBook);
-            }catch (BookException e){
-                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            }
+    public ResponseEntity<?> updateBook(@PathVariable Long bookId, @Valid @RequestBody BookDTO bookDTO) throws BookException {
+        BookDTO updatedBook = bookService.updateBook(bookDTO, bookId);
+        return ResponseEntity.ok(updatedBook);
     }
+
+    @DeleteMapping("permanent/{bookId}")
+    public ResponseEntity<?> hardDeleteBook(@PathVariable Long bookId) throws BookException {
+        bookService.deleteBook(bookId);
+        return ResponseEntity.ok(new ApiResponse("Book permanent deleted successfully, with id: "+bookId,true));
+    }
+
 
 }
