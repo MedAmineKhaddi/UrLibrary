@@ -4,7 +4,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import ma.services.urbook.Exceptions.BookException;
 import ma.services.urbook.Payload.DTO.BookDTO;
+import ma.services.urbook.Payload.Request.BookSearchRequest;
 import ma.services.urbook.Payload.Response.ApiResponse;
+import ma.services.urbook.Payload.Response.PageResponse;
 import ma.services.urbook.services.BookService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -56,6 +58,14 @@ public class BookController {
         bookService.deleteBook(bookId);
         return ResponseEntity.ok(new ApiResponse("Book permanent deleted successfully, with id: "+bookId,true));
     }
+
+    @PostMapping("/search")
+    public ResponseEntity<PageResponse<BookDTO>> advancedSearch(@RequestBody BookSearchRequest searchRequest) throws BookException {
+        PageResponse<BookDTO> books = bookService.searchBooksWithFilters(searchRequest);
+        return ResponseEntity.ok(books);
+    }
+
+
 
 
 }
