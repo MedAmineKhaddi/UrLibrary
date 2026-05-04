@@ -65,7 +65,24 @@ public class BookController {
         return ResponseEntity.ok(books);
     }
 
+    @GetMapping("/status")
+    public ResponseEntity<BookStatusResponse> getBookStatus()
+    {
+        long totalActiveBooks = bookService.getTotalActiveBooks();
+        long totalAvailableBooks = bookService.getTotalAvailableBooks();
+        BookStatusResponse bookStatusResponse = new BookStatusResponse(totalActiveBooks, totalAvailableBooks);
+        return ResponseEntity.ok(bookStatusResponse);
+    }
 
 
+    public static class BookStatusResponse {
+        long totalActiveBooks;
+        long totalAvailableBooks;
+
+        public BookStatusResponse(long totalActiveBooks, long totalAvailableBooks) {
+            this.totalActiveBooks = totalActiveBooks;
+            this.totalAvailableBooks = totalAvailableBooks;
+        }
+    }
 
 }
