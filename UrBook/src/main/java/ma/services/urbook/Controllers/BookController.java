@@ -15,13 +15,13 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/books")
+@RequestMapping("/api/books")
 public class BookController {
 
     private final BookService bookService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> addBook(@Valid @RequestBody BookDTO bookDTO) throws BookException {
+    public ResponseEntity<BookDTO> addBook(@Valid @RequestBody BookDTO bookDTO) throws BookException {
         return ResponseEntity.ok(bookService.createBook(bookDTO));
     }
 
