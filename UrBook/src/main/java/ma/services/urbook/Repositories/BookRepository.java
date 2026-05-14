@@ -26,7 +26,7 @@ public interface BookRepository extends JpaRepository<Book,Long> {
             "b.active=true")
     Page<Book> searchBooksWithFilters(
             @Param("searchTerm") String searchTerm,
-            @Param("genreID") Long genreID,
+            @Param("genreId") Long genreId,
             @Param("availableOnly") boolean available,
             Pageable pageable);
 
