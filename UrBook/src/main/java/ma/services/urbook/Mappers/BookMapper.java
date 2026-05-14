@@ -57,8 +57,6 @@ public class BookMapper {
                 .description(bookDTO.getDescription())
                 .price(bookDTO.getPrice())
                 .isbn(bookDTO.getIsbn())
-                .createdAt(bookDTO.getCreatedAt())
-                .updatedAt(bookDTO.getUpdatedAt())
                 .active(true)
                 .language(bookDTO.getLanguage())
                 .publisher(bookDTO.getPublisher())
