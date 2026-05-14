@@ -66,20 +66,41 @@ public class BookController {
     }
 
     @GetMapping("/status")
-    public ResponseEntity<BookStatusResponse> getBookStatus()
+    public ResponseEntity<BookStatsResponse> getBookStats()
     {
         long totalActiveBooks = bookService.getTotalActiveBooks();
         long totalAvailableBooks = bookService.getTotalAvailableBooks();
-        BookStatusResponse bookStatusResponse = new BookStatusResponse(totalActiveBooks, totalAvailableBooks);
+        BookStatsResponse bookStatusResponse = new BookStatsResponse(totalActiveBooks, totalAvailableBooks);
         return ResponseEntity.ok(bookStatusResponse);
     }
 
+    @GetMapping()
+    public ResponseEntity<PageResponse<BookDTO>> searchBooks(
+            @RequestParam(required = false) Long genreId,
+            @RequestParam(required = false, defaultValue = "false") Boolean availableOnly,
+            @RequestParam(defaultValue = "true")  boolean activeOnly,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(defaultValue = "DESC") String sortDirection) throws BookException {
 
-    public static class BookStatusResponse {
+        BookSearchRequest searchRequest = new BookSearchRequest();
+        searchRequest.setGenreId(genreId);
+        searchRequest.setAvailableOnly(availableOnly);
+        searchRequest.setPage(page);
+        searchRequest.setSize(size);
+        searchRequest.setSortBy(sortBy);
+        searchRequest.setSortDirection(sortDirection);
+        PageResponse<BookDTO> books = bookService.searchBooksWithFilters(searchRequest);
+        return ResponseEntity.ok(books);
+    }
+
+
+    public static class BookStatsResponse {
         long totalActiveBooks;
         long totalAvailableBooks;
 
-        public BookStatusResponse(long totalActiveBooks, long totalAvailableBooks) {
+        public BookStatsResponse(long totalActiveBooks, long totalAvailableBooks) {
             this.totalActiveBooks = totalActiveBooks;
             this.totalAvailableBooks = totalAvailableBooks;
         }
